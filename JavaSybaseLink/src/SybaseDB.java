@@ -47,7 +47,8 @@ public class SybaseDB {
 		this.password = password;
 		this.props = props;
 		this.props.put("user", username);
-		this.props.put("password", password);		
+		this.props.put("password", password);
+                this.props.put("SYBSOCKET_FACTORY", "CustomSybSocketFactory");
 		df.setTimeZone(TimeZone.getTimeZone("UTC"));
 	}
 
@@ -55,7 +56,7 @@ public class SybaseDB {
 	{
 		try {
 			SybDriver sybDriver = (SybDriver) Class.forName("com.sybase.jdbc3.jdbc.SybDriver").newInstance();
-			conn = DriverManager.getConnection("jdbc:sybase:Tds:" + host + ":" + port + "/" + dbname, props);
+			conn = DriverManager.getConnection("jdbc:sybase:Tds:" + host + ":" + port + "/" + dbname + "?ENABLE_SSL=true&SSL_TRUST_ALL_CERTS=true", props);
 			return true;
 
 		} catch (Exception ex) {
